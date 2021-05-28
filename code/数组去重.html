@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            数组去重一
+            两次循环 用第一个值和第二个值比较，如果相等则删除一个值
+         */
+        let arr1 = [12, 13, 23, 65, 78, 98, 3, 4, 24, 13, 8, 34, 13, 3, 12]
+        for (var i = 0; i < arr1.length; i++) {
+            for (var j = i + 1; j < arr1.length; j++) {
+                if (arr1[i] === arr1[j]) {
+                    arr1.splice(j, 1)
+                    i--
+                }
+            }
+        }
+        console.log(arr1)
+
+        /* 
+            数组去重方法二
+            通过下标来判断来判断在新数组中是否存在
+            如果不存在则返回-1  则直接添加到新数组中
+        */
+        let arr2 = [12, 13, 23, 65, 78, 98, 3, 4, 24, 13, 8, 34, 13, 3, 12]
+        let _arr2 = []
+        arr2.forEach((item, index) => {
+            if (_arr2.indexOf(item) === -1) {
+                _arr2.push(item)
+            }
+        })
+        console.log(_arr2)
+
+        /*
+            数组去重方法三
+            通过下标在数组中进行查询 如果当前下标和数组中的下标一致
+            则说明 此数据在数组中第一次出现
+            因为indexOf返回的元素在数组中第一次出现的下标
+            如果成立，则将数据添加到新数组中
+        */
+        let arr3 = [12, 13, 23, 65, 78, 98, 3, 4, 24, 13, 8, 34, 13, 3, 12]
+        let _arr3 = []
+        arr3.forEach((item, index) => {
+            if (arr3.indexOf(item) === index) {
+                _arr3.push(item)
+            }
+        })
+        console.log(_arr3)
+
+        /* 
+            数组去重方法四：
+            使用过滤
+            数组过滤返回一个新数组
+        */
+        let arr4 = [12, 13, 23, 65, 78, 98, 3, 4, 24, 13, 8, 34, 13, 3, 12]
+        let demo=arr4.filter((item, index) => {
+            return arr4.indexOf(item) === index
+        })
+        console.log(demo)
+
+        /* 
+            数组去重方法五：
+            set()
+        */
+        let arr5 = [12, 13, 23, 65, 78, 98, 3, 4, 24, 13, 8, 34, 13, 3, 12]
+        let _arr5=[...new Set(arr5)]
+        console.log(_arr5)
+    </script>
+</body>
+
+</html>

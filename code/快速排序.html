@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let demo = [12, 3, 4, 5, 78, 45, 12, 15, 98, 11, 22, 77, 44]
+        /* 
+            快速排序逻辑：
+                创建比较函数
+                判断数组传进函数的数组的长度，如果小于1 则直接退出函数 返回这个数组
+                定义中间量 
+                定义左右两边的空数组
+                依次和中间量作比较，大的放右 小的放左
+                然后再次调用函数再次循环比较 最后将数组拼接
+        */
+        function fn(arr) {
+            if (arr.length < 1) {
+                return arr
+            }
+            //定义中间量
+            let con = arr.pop()
+            //console.log(con)
+            //定义左右两边的空数组
+            let _left = []
+            let _right = []
+            //遍历数组
+            arr.forEach((item, index) => {
+                //依次和中间值进行比较
+                if (item < con) {
+                    _left.push(item)
+                } else {
+                    _right.push(item)
+                }
+            })
+            //拼接数组并打印
+            return fn(_left).concat(con, fn(_right))
+        }
+        let re = fn(demo)
+        console.log(re)
+    </script>
+</body>
+
+</html>

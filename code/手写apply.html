@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            apply
+                和call类似，只是参数不同 除了第一个参数 其余参数都是放在数组中
+                改变函数的this指向
+                调用函数
+        */
+        Function.prototype.myApply = function (context) {
+            //判断参数类型
+            if (context === null || context === undefined) {
+                context = window
+            }
+            if (typeof context !== "object" && typeof context !== "function") {
+                context = Object(context)
+            }
+            //获取实参
+            let arg = arguments[1]
+            //给context扩展不重名的方法
+            let key = Date.now().toString()
+            //改变函数的this指向
+            context[key] = this
+            //调用函数
+            eval("context[key](" + arg.toString() + ")")
+            //再删除给 context扩展的方法
+            delete context[key]
+        }
+
+        function fn(a, b) {
+            console.log(this, a + b)
+        }
+        fn.myApply(12, [12, 21])
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+            手写call的逻辑：
+                call改变函数的this指向 第一个参数
+                并调用函数
+                如果第一个参数是基本数据类型，返回的是基本数据类型的包装对象
+                如果是对象类型，返回的是当前对象
+                undefined 和null指向的是window
+                因为函数可以调用这个call方法，所以call方法应创建在fn构造函数的原型对象上
+        */
+        Function.prototype.myCall = function (context) {
+            //判断第一个参数的类型
+            if (context === null || context === undefined) {
+                context = window
+            }
+            if (typeof context !== "object" && typeof context !== "function") {
+                context = Object(context)
+            }
+            //获取参数
+            let arg = Array.from(arguments).slice(1)
+            //改变函数的this指向 指向第一个参数
+            let demo = Date.now().toString()
+            context[demo] = this
+            //调用函数
+            //fn()
+            //context.demo(arg)
+            eval("context[demo](" + arg.toString() + ")")
+            //调用完毕之后 再把给context创建的方法属性删除
+            delete context[demo]
+        }
+
+
+        function fn(a, b) {
+            console.log(this, a + b)
+        }
+        fn.myCall(12, 34, 11)
+    </script>
+</body>
+
+</html>

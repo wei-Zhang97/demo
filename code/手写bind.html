@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+            bind
+                返回了一个改变了this指向的函数
+                参数和call类似
+        */
+        Function.prototype.myBind = function (context) {
+            //判断参数类型
+            if (context === null || context === undefined) {
+                context = window
+            }
+            if (typeof context !== "object" && typeof context !== "function") {
+                context = Object(context)
+            }
+            //获取参数
+            let arg = Array.from(arguments).slice(1)
+            //在myBind函数中的this指向 当前函数的调用者fn
+            //保存当前的this指向
+            let _this = this
+            return function () {
+                _this.apply(context, arg)
+            }
+        }
+
+        function fn(a, b) {
+            console.log(this, a + b)
+        }
+        //fn.myBind 拿到的是一个改变了this指向的函数
+        let re=fn.myBind("aaa", 88, 22)
+        re()
+    </script>
+</body>
+
+</html>
